@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>ed7ca66f-dc8d-403c-b79e-900f9400cbb6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\public\**" />
+    <Content Remove="wwwroot\public\**" />
+    <EmbeddedResource Remove="wwwroot\public\**" />
+    <None Remove="wwwroot\public\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JavaScriptEngineSwitcher.Extensions.MsDependencyInjection" Version="3.3.0" />
+    <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.12.1" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.2" />
+    <PackageReference Include="React.AspNet" Version="5.2.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\src\Tutorial.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>

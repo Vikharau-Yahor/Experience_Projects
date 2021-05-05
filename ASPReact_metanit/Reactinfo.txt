@@ -1,0 +1,37 @@
+***********
+Links
+************
+tutorial: https://reactjs.net/tutorials/aspnetcore.html
+
+***********
+React integration with ASP.NET project (.Net 5)
+************
+1) Add ASP.net infrastructure
+
+startup.ConfigureServices:
+- services.AddControllersWithViews();
+- services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+startup.Configure:
+- app.UseStaticFiles();
+- app.UseRouting
+- app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+
+-- Add new controller via Add -> new Item -> Api controller.
+-- Add Views\_ViewImports.cshtml with content: 
+	@using React.AspNet
+	
+2) Add React infrastructure:
+- install ReactJS.ASPNet package (contains ReactJs + Babel tools)
+- install JS engine: Microsoft.ClearScript.win-arm64 (you can also install JavaScriptEngineSwitcher.ChakraCore instead of V8)
+- install JavaScriptEngineSwitcher.Extensions.MsDependencyInjection (just an extensions for adding the JS engine switcher to service collection)
+- install JavaScriptEngineSwitcher.V8
+
+Startup.Configure:
+- services.AddReact();
+   // Make sure a JS engine is registered, or you will get an error!
+- services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
+ 	.AddV8();
