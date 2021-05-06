@@ -8,4 +8,8 @@
     <Folder Include="wwwroot\public\js\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.5" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SpaServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -16,6 +17,8 @@ namespace ReactApp_Base
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddOptions<SpaOptions>("SpaConfiguration");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,17 +29,20 @@ namespace ReactApp_Base
                 app.UseDeveloperExceptionPage();
             }
 
+            // 1st -- tries return static files for requiest
             app.UseStaticFiles();
 
+            // 2nd -- tries process request as API call
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
+
+            // 3rd -- just return SPA view
+            // Note: default page path and other settings are configured by SpaOptions
+            app.UseSpa(x=> { });
         }
     }
 }
