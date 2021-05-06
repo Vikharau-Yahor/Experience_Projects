@@ -49,10 +49,11 @@ Setup FE space
 
         ReactDOM.render(<CommentBox />, document.getElementById('content'));
 - add 'public/index.html':
+        <!DOCTYPE html>
+        <html>
         <head>
             <meta charset="utf-8" />
             <title>Home</title>
-            <script src="/js/bundle.js"></script>
         </head>
         <body>
             <h1>Home page</h1>
@@ -61,3 +62,4 @@ Setup FE space
             </div>
             <script src="/js/bundle.js"></script>
         </body>
+        </html>
