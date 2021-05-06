@@ -7,6 +7,7 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public/js'),
     },
+    devtool: 'inline-source-map', // enables react debug (i.e. source mapping for react bundled code)
     module: {
         rules: [
           {
