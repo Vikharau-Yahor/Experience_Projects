@@ -1,5 +1,5 @@
 ﻿**********
-Setup FE space
+Setup Base: Webpack, Babel, React
 **********
 - create 'public/js' and 'src' folder
 - run 'npm install webpack' in wwroot ----> packages.json, packages-lock.json node_modules are created
@@ -10,26 +10,27 @@ Setup FE space
         const path = require('path');
 
         module.exports = {
-            mode: 'development',
-            entry: './src/Test.js',
-            output: {
-                filename: 'bundle.js',
-                path: path.resolve(__dirname, 'public/js'),
-            },
-            module: {
-                rules: [
-                  {
-                    test: /\.m?js$/,
-                    exclude: /(node_modules|bower_components)/,
-                    use: {
-                      loader: 'babel-loader',
-                      options: {
-                        presets: ['@babel/preset-env', "@babel/preset-react"]
-                      }
-                    }
+        mode: 'development',
+        entry: './src/Test.jsx',
+        output: {
+            filename: 'bundle.js',
+            path: path.resolve(__dirname, 'public/js'),
+        },
+        devtool: 'inline-source-map', // enables react debug (i.e. source mapping for react bundled code)
+        module: {
+            rules: [
+              {
+                test: /\.m?jsx$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['@babel/preset-env', "@babel/preset-react"]
                   }
-                ]
+                }
               }
+            ]
+          }
         }
 - add script to packages.json
       "scripts": {
@@ -63,3 +64,11 @@ Setup FE space
             <script src="/js/bundle.js"></script>
         </body>
         </html>
+- Install React DevTools Extension for your browser
+
+*****************
+Setup Redux
+***************
+- npm install redux
+- npm install react-redux
+- Install Redux DevTools for your browser
