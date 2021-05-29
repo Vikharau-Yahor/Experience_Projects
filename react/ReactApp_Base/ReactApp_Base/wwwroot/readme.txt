@@ -5,7 +5,7 @@ Setup Base: Webpack, Babel, React
 - run 'npm install webpack' in wwroot ----> packages.json, packages-lock.json node_modules are created
 - create 'webpack.config.js' in root folder
 - run 'npm install -D babel-loader @babel/core @babel/preset-env @babel/preset-react' -- isntalls babel-loader and its dependencies
-- run 'npm isntall react react-dom' installs react modules
+- run 'npm install react react-dom' installs react modules
 - add to 'webpack.config.js':
         const path = require('path');
 
@@ -64,7 +64,44 @@ Setup Base: Webpack, Babel, React
             <script src="/js/bundle.js"></script>
         </body>
         </html>
-- Install React DevTools Extension for your browser
+- install React DevTools Extension for your browser
+
+******************
+Enable TypeScript (webpack, babel)
+**********************************
+1) run 'npm install @babel/preset-typescript' in wwroot
+2) update webpack.config by adding 'resolve' node and updating babel module:
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
+    module: {
+        rules: [
+            {
+                test: /\.tsx$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', "@babel/preset-react", "@babel/preset-typescript"]
+                    }
+                }
+            }
+        ]
+    }
+3) run 'npm run build' to build bundle
+4) optionally, add "tsconfig.json" which is used by Visual studio (e.g. for Intellisence in TS code):
+    {
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node"
+  }
+}
 
 *****************
 Setup Redux
