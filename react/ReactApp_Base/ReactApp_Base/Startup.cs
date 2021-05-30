@@ -30,8 +30,21 @@ namespace ReactApp_Base
             }
 
             // 1st -- tries return static files for requiest
-            app.UseStaticFiles();
-
+            // -- if development then hot reload/rebuild are enabled via webpack dev server (must be run using npm run 
+            if (env.IsDevelopment())
+            {
+                app.Map(
+                    "/js",
+                    ctx => ctx.UseSpa(
+                        spa =>
+                        {
+                            spa.UseProxyToSpaDevelopmentServer("http://localhost:3001/");
+                        })); ;
+            }
+            else
+            {
+                app.UseStaticFiles();
+            }
             // 2nd -- tries process request as API call
             app.UseRouting();
 
@@ -42,7 +55,8 @@ namespace ReactApp_Base
 
             // 3rd -- just return SPA view
             // Note: default page path and other settings are configured by SpaOptions
-            app.UseSpa(x=> { });
+            app.UseSpa(x => { });
+            
         }
     }
 }

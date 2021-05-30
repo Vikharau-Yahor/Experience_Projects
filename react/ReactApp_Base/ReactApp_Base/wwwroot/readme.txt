@@ -109,3 +109,42 @@ Setup Redux
 - npm install redux
 - npm install react-redux
 - Install Redux DevTools for your browser
+
+
+************
+WebPack Live rebuild and page reload
+******************
+- https://dev.to/jayotterbein/how-to-get-hot-module-reload-with-custom-webpack-in-asp-net-core-3-1-5a7m
+- npm install webpack-dev-server --save-dev
+- nuget package must be installed: "Microsoft.AspNetCore.SpaServices.Extensions"
+- add to webpck.config.json
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        compress: true,
+        // this enabled hot module replacement of modules so when you make a change in a javascript or css file the change will reflect on the browser
+        hot: true,
+        // this uses websockets for communication for hot module reload, and websockets are planned to be the default for the 5.x release
+        transportMode: 'ws',
+        // port that the webpack-dev-server runs on; must match the later configuration where ASP.NET Core knows where to execute
+        port: 3001
+    },
+- add script to package.json:
+   "serve": "webpack serve"
+- update Startup configure
+            if (env.IsDevelopment())
+            {
+                app.Map(
+                    "/js",
+                    ctx => ctx.UseSpa(
+                        spa =>
+                        {
+                            spa.Options.SourcePath = "wwwroot/public";
+                            spa.UseProxyToSpaDevelopmentServer("http://localhost:3001/");
+                        })); ;
+            }
+            else
+            {
+                app.UseStaticFiles();
+            }
+- run command "npm run serve" + run asp.net server
+Note: asp.net server will get static files from webpack server which will rebuild any affected scripts + reload browser
